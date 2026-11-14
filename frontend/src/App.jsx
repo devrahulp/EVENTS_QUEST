@@ -1,26 +1,21 @@
-import React from "react";
+import QuestFreshers from "./pages/srimanth.jsx";
 
 import Greenshma from "./pages/greeshma";
 import Poojitha from "./pages/poojitha";
-import Spoorthi from "./pages/spoorthi";
-import Srimanth from "./pages/srimanth";
+import EventHorizon from "./pages/spoorthi";
+import FreshersEvent from "./pages/srimanth";  
+
+
 
 function App() {
   return (
     <div>
-      <h1>React Components Demo</h1>
-
-      <Greenshma />
+      
+      <EventHorizon />
+      <hr />
+      <FreshersEvent />
       <hr />
 
-      <Poojitha />
-      <hr />
-
-      <Spoorthi />
-      <hr />
-
-      <Srimanth />
-      <hr />
     </div>
   );
 }
