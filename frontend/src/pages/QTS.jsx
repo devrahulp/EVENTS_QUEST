@@ -205,7 +205,7 @@ export default function QuestTestSeries() {
                   <circle cx="12" cy="10" r="2.5" />
                 </svg>
                 <small>Place</small>
-                <b>Your Venue</b>
+                <b>CSE Block</b>
               </div>
             </section>
 
