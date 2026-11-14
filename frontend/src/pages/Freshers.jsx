@@ -271,26 +271,6 @@ export default function QuestFreshers() {
                           }}
                         />
                       ) : null}
-                      <div className="ginfo">
-                        <div className="gbar">
-                          <span className="gn">
-                            {String(cur + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
-                          </span>
-                          <i>
-                            <b style={{ width: ((cur + 1) / N) * 100 + "%" }} />
-                          </i>
-                          <button
-                            className="gnext"
-                            aria-label="Next photo"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              go(cur + 1);
-                            }}
-                          >
-                            ›
-                          </button>
-                        </div>
-                      </div>
                     </figure>
                   );
                 })}

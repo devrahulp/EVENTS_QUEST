@@ -10,6 +10,24 @@ const PHOTOS = [
   { src: "public/images/placement_iq/IMG_20260425_143931128.jpg", name: "", sub: "Closing", art: "a3" },
 ];
 
+/* ---- EDIT SPEAKER DETAILS HERE ----
+   photo: put the speaker's picture at this path (initials show until it exists).
+   experience: add 3-4 short lines from the speaker's LinkedIn; the list is hidden while empty. */
+const SPEAKER = {
+  name: "Sahana Shanbhag",
+  role: "Senior Analyst",
+  company: "Target Corporation",
+  photo: "public/images/speaker/speaker.jpg",
+  experience: [],
+  topics: [
+    "Career planning",
+    "High-CTC job strategies",
+    "Resume building",
+    "LinkedIn optimization",
+    "Technical & HR interview prep",
+  ],
+};
+
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500&display=swap');
 :root{
@@ -67,6 +85,21 @@ nav a:hover{color:#fff}
 .about li{padding:5px 12px;border-radius:999px;border:1px solid var(--glass-border);font-size:12px;color:var(--text-muted)}
 .about li:first-child{border-color:rgba(46,238,208,.4);color:var(--accent-teal)}
 
+/* 3b. Speaker */
+.speaker{margin:20px auto 0;max-width:680px;padding:20px 22px;border-radius:18px;background:var(--glass-card-bg);border:1px solid var(--glass-border);display:grid;grid-template-columns:auto 1fr;gap:8px 22px;align-items:center}
+.speaker .sp-label{grid-column:1/-1;margin:0;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-teal)}
+.sp-photo{position:relative;width:112px;height:112px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--purple-gradient);font-weight:800;font-size:34px;color:#fff;box-shadow:0 0 0 3px rgba(168,121,230,.3),0 14px 34px rgba(130,68,179,.4)}
+.sp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sp-body{display:grid;gap:6px;min-width:0}
+.sp-body h3{margin:0;font-size:20px;color:var(--text-main)}
+.sp-role{margin:0;font-size:14px;color:var(--text-muted)}
+.sp-role b{color:var(--color-secondary);font-weight:600}
+.sp-exp{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.sp-exp li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:var(--text-muted)}
+.sp-exp li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--purple-gradient)}
+.sp-topics{margin:8px 0 0;padding:0;list-style:none;display:flex;gap:8px;flex-wrap:wrap}
+.sp-topics li{padding:4px 11px;border-radius:999px;border:1px solid var(--glass-border);font-size:11.5px;color:var(--text-muted)}
+
 /* 4. Photo coverflow (auto-scrolling) */
 .gallery{margin-top:34px;overflow-x:clip;container-type:inline-size}
 .gallery h2{text-align:center;font-size:18px;margin:0 0 4px;color:var(--text-main)}
@@ -78,24 +111,23 @@ nav a:hover{color:#fff}
 .gcard .gtag{position:absolute;z-index:2;top:12px;left:12px;display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
 .gcard .gtag small{display:block;color:var(--text-muted);font-weight:400;font-size:11px}
 .gcard .gtag svg{width:15px;height:15px;stroke:var(--color-secondary);fill:none;stroke-width:2}
-.gcard .ginfo{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;display:none}
-.gcard .ginfo p{margin:0 0 10px;font-size:14px;font-weight:600;line-height:1.3}
-.gbar{display:flex;align-items:center;gap:12px;font:12px var(--font-mono);color:var(--text-muted)}
-.gbar i{flex:1;height:2px;background:var(--glass-border);border-radius:2px;overflow:hidden}
-.gbar i b{display:block;height:100%;background:var(--purple-gradient);transition:width .6s}
 .gcard[data-pos="0"]{opacity:1;pointer-events:auto;z-index:5;width:min(380px,34cqw);transform:translate(-50%,-50%) translateZ(60px);border-color:var(--glass-border-hover);box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(168,121,230,.15)}
-.gcard[data-pos="0"] .ginfo{display:block}
 .gcard[data-pos="-1"]{opacity:.9;pointer-events:auto;z-index:4;transform:translate(calc(-50% - min(240px,21cqw)),-50%) rotateY(32deg) scale(.85)}
 .gcard[data-pos="1"]{opacity:.9;pointer-events:auto;z-index:4;transform:translate(calc(-50% + min(240px,21cqw)),-50%) rotateY(-32deg) scale(.85)}
 .gcard[data-pos="-2"]{opacity:.65;pointer-events:auto;z-index:3;transform:translate(calc(-50% - min(380px,33cqw)),-50%) rotateY(38deg) scale(.72)}
 .gcard[data-pos="2"]{opacity:.65;pointer-events:auto;z-index:3;transform:translate(calc(-50% + min(380px,33cqw)),-50%) rotateY(-38deg) scale(.72)}
 .gcard[data-pos="-1"]:hover,.gcard[data-pos="1"]:hover,.gcard[data-pos="-2"]:hover,.gcard[data-pos="2"]:hover{border-color:var(--glass-border-hover);opacity:1}
-.gnext{position:absolute;right:0;bottom:0;width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass-bg);backdrop-filter:blur(10px);color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center;padding:0}
-.gnext:hover{border-color:var(--glass-border-hover)}
-.gbar{padding-right:38px;position:relative;min-height:30px}
 .a1{background:radial-gradient(70% 50% at 70% 20%,rgba(46,238,208,.55),transparent 70%),linear-gradient(160deg,#23143E,#8244B3 60%,#1A0F2E)}
 .a2{background:radial-gradient(60% 50% at 30% 25%,rgba(124,155,255,.6),transparent 70%),linear-gradient(160deg,#1A0F2E,#5b3a9a 55%,#0B0B14)}
 .a3{background:radial-gradient(60% 50% at 50% 30%,rgba(168,121,230,.5),transparent 70%),linear-gradient(160deg,#23143E,#1A0F2E 70%)}
+
+/* 5. Lightbox (click any photo) */
+.lb{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) 20px max(20px,env(safe-area-inset-bottom,0px));background:rgba(5,5,12,.88);backdrop-filter:blur(10px);animation:fade .25s ease both;cursor:zoom-out}
+.lb-img{display:block;max-width:min(94vw,1200px);max-height:84vh;width:auto;height:auto;object-fit:contain;border-radius:16px;border:1px solid var(--glass-border-hover);box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 60px rgba(168,121,230,.25);cursor:default;animation:pop .3s cubic-bezier(.2,.7,.2,1) both}
+.lb-ph{width:min(90vw,720px);aspect-ratio:8/5;border-radius:16px;border:1px solid var(--glass-border-hover);cursor:default}
+.lb-close{position:absolute;top:max(14px,env(safe-area-inset-top,0px));right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass-bg);backdrop-filter:blur(10px);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.lb-close:hover{border-color:var(--glass-border-hover)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}}
 
 .page{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
 .page>.wrap{flex:1 0 auto;width:100%}
@@ -108,6 +140,10 @@ footer a{color:var(--color-secondary)}
   .fact b{font-size:10.5px}
   .gallery{margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad));margin-top:28px}
   footer .wrap{justify-content:center;text-align:center}
+  .speaker{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .sp-body{justify-items:center}
+  .sp-exp li{text-align:left}
+  .sp-topics{justify-content:center}
 }
 @container (max-width:700px){
   .gstage{height:calc(56cqw*.625 + 56px)}
@@ -117,9 +153,6 @@ footer a{color:var(--color-secondary)}
   .gcard[data-pos="1"]{transform:translate(calc(-50% + 24cqw),-50%) rotateY(-30deg) scale(.85)}
   .gcard[data-pos="-2"]{transform:translate(calc(-50% - 34cqw),-50%) rotateY(36deg) scale(.7)}
   .gcard[data-pos="2"]{transform:translate(calc(-50% + 34cqw),-50%) rotateY(-36deg) scale(.7)}
-  .gcard .ginfo{left:10px;right:10px;bottom:10px}
-  .gnext{width:26px;height:26px;font-size:16px}
-  .gbar{gap:8px;font-size:10px;padding-right:32px;min-height:26px}
 }
 @media(max-width:359px){
   .facts{grid-template-columns:1fr}
@@ -145,7 +178,8 @@ body::after{bottom:-180px;left:-160px;width:620px;height:620px;background:radial
 .facts{animation:rise .8s .12s cubic-bezier(.2,.7,.2,1) both}
 .cta{animation:rise .8s .24s cubic-bezier(.2,.7,.2,1) both}
 .about{animation:rise .8s .36s cubic-bezier(.2,.7,.2,1) both}
-.gallery{animation:fade 1s .5s ease both}
+.speaker{animation:rise .8s .48s cubic-bezier(.2,.7,.2,1) both}
+.gallery{animation:fade 1s .6s ease both}
 .title h1{background:linear-gradient(135deg,#FFFFFF 0%,#A879E6 60%,#7C9BFF 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 6px 26px rgba(130,68,179,.5))}
 .title::after{content:"";display:block;width:72px;height:3px;margin:14px auto 0;border-radius:3px;background:var(--teal-gradient)}
 .fact{backdrop-filter:blur(10px);transition:transform .25s,border-color .25s,box-shadow .25s}
@@ -153,9 +187,9 @@ body::after{bottom:-180px;left:-160px;width:620px;height:620px;background:radial
 .fact svg{box-sizing:content-box;padding:3px;border-radius:50%;background:rgba(168,121,230,.16)}
 .btn{position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(130,68,179,.45)}
 .btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite;pointer-events:none}
-.about{position:relative;isolation:isolate;overflow:hidden;backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.about::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple-gradient)}
-.about::after{content:"";position:absolute;z-index:-1;right:-60px;top:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(168,121,230,.24),transparent 70%);pointer-events:none}
+.about,.speaker{position:relative;isolation:isolate;overflow:hidden;backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.about::before,.speaker::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple-gradient)}
+.about::after,.speaker::after{content:"";position:absolute;z-index:-1;right:-60px;top:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(168,121,230,.24),transparent 70%);pointer-events:none}
 .gallery h2::after{content:"";display:block;width:40px;height:3px;margin:8px auto 0;border-radius:3px;background:var(--purple-gradient)}
 .gstage::after{content:"";position:absolute;left:50%;bottom:4%;width:46%;height:34px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(130,68,179,.4),transparent 70%);filter:blur(8px);pointer-events:none}
 .gcard::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(115deg,rgba(255,255,255,.14),transparent 35%);pointer-events:none}
@@ -174,19 +208,43 @@ const PIN = (
 export default function QuestEvents() {
   const N = PHOTOS.length;
   const [cur, setCur] = useState(0);
+  const [lightbox, setLightbox] = useState(null); // index of the enlarged photo, or null
   const touchX = useRef(0);
 
   useEffect(() => {
     document.title = "Placement IQ | QUEST Events";
   }, []);
 
-  // Auto-scroll: advance every 2.8s, timer restarts after any manual change
+  // Auto-scroll: advance every 2.8s, timer restarts after any manual change; paused while a photo is enlarged
   useEffect(() => {
+    if (lightbox !== null) return;
     const t = setInterval(() => setCur((c) => (c + 1) % N), 2800);
     return () => clearInterval(t);
-  }, [cur, N]);
+  }, [cur, N, lightbox]);
+
+  // Lightbox: close on Escape, lock page scroll while open
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [lightbox]);
 
   const go = (i) => setCur(((i % N) + N) % N);
+
+  const initials = SPEAKER.name
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
     <>
@@ -238,6 +296,41 @@ export default function QuestEvents() {
             </p>
           </section>
 
+          {/* 3b. Speaker */}
+          <section className="speaker" id="speaker" aria-label="Speaker">
+            <p className="sp-label">Meet the speaker</p>
+            <div className="sp-photo">
+              <span aria-hidden="true">{initials}</span>
+              {SPEAKER.photo ? (
+                <img
+                  src={SPEAKER.photo}
+                  alt={SPEAKER.name}
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              ) : null}
+            </div>
+            <div className="sp-body">
+              <h3>{SPEAKER.name}</h3>
+              <p className="sp-role">
+                {SPEAKER.role} at <b>{SPEAKER.company}</b>
+              </p>
+              {SPEAKER.experience.length > 0 && (
+                <ul className="sp-exp">
+                  {SPEAKER.experience.map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ul>
+              )}
+              <ul className="sp-topics" aria-label="Session topics">
+                {SPEAKER.topics.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
           {/* 4. Scrolling photos */}
           <section className="gallery" id="gallery" aria-label="Event photos">
             <h2>Event photos</h2>
@@ -265,23 +358,12 @@ export default function QuestEvents() {
                     data-i={i}
                     data-pos={d}
                     aria-hidden={d !== 0}
-                    onClick={() => go(i)}
+                    onClick={() => {
+                      go(i);
+                      setLightbox(i);
+                    }}
                   >
                     {p.src ? <img src={p.src} alt={p.name} /> : null}
-                    <div className="ginfo">
-                      <div className="gbar">
-                        <button
-                          className="gnext"
-                          aria-label="Next photo"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            go(cur + 1);
-                          }}
-                        >
-                          ›
-                        </button>
-                      </div>
-                    </div>
                   </figure>
                 );
               })}
@@ -292,6 +374,41 @@ export default function QuestEvents() {
 
       
       </div>
+
+      {/* 5. Enlarged photo, centered on screen */}
+      {lightbox !== null && (
+        <div
+          className="lb"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged photo"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            className="lb-close"
+            aria-label="Close photo"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox(null);
+            }}
+          >
+            ×
+          </button>
+          {PHOTOS[lightbox].src ? (
+            <img
+              className="lb-img"
+              src={PHOTOS[lightbox].src}
+              alt={PHOTOS[lightbox].name}
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <div
+              className={`lb-ph ${PHOTOS[lightbox].art}`}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+        </div>
+      )}
     </>
   );
 }
