@@ -1,4 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import QuestFreshers from "./Freshers";
+import QuestEvents from "./PIQ";
+import QuestTestSeries from "./QTS";
+
+const PAGES = {
+  "freshers": QuestFreshers,
+  "placement-iq": QuestEvents,
+  "quest-test-series": QuestTestSeries
+};
 
 const CSS = `
 :root{box-sizing:border-box;--bg:#05020b;--fg:#f1eaff;--mut:#b9a6e6;--acc:#a96bff;--card:rgba(30,12,60,.55);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -28,35 +37,27 @@ header h1{margin:0;font-size:clamp(20px,3vw,30px);letter-spacing:.3em;font-weigh
 `;
 
 export default function EventHorizon() {
+  const [route, setRoute] = useState(location.hash.slice(1));
+
+  useEffect(() => {
+    const onHash = () => setRoute(location.hash.slice(1));
+    addEventListener("hashchange", onHash);
+    return () => removeEventListener("hashchange", onHash);
+  }, []);
+
+  const Page = PAGES[route];
+
   useEffect(() => {
     document.title = "Event Horizon – Campus Events";
 
     const EVENTS={
-     'freshers':{icon:'🎉',name:'Freshers Event',tag:'Welcome party',
-      desc:'The official welcome for new students: meet seniors, clubs and faculty, and kick off the year with music, games and performances.',
-      when:'Date to be announced',where:'Main auditorium',who:'First-year students',
-      list:['Welcome address & campus tour','Club and society showcase','Talent show and DJ night','Fresher of the year awards']},
-     'placement-iq':{icon:'🧠',name:'Placement IQ',tag:'Career readiness',
-      desc:'A placement-prep program covering aptitude, reasoning, technical rounds and HR interviews, with mock drives run by industry mentors.',
-      when:'Date to be announced',where:'Seminar hall / online',who:'Final and pre-final years',
-      list:['Aptitude & logical reasoning drills','Coding and technical round practice','Resume and LinkedIn clinic','Mock group discussions and HR interviews']},
-     'quest-test-series':{icon:'📝',name:'Quest Test Series',tag:'Practice tests',
-      desc:'A structured series of timed mock tests with detailed analytics, rank lists and solution walkthroughs to track your progress week by week.',
-      when:'Weekly, dates to be announced',where:'Online',who:'All students',
-      list:['Full-length timed mock tests','Topic-wise sectional tests','All-India style rank list','Performance analytics and solutions']}
+     'freshers':{icon:'🎉',name:'Freshers Event'},
+     'placement-iq':{icon:'🧠',name:'Placement IQ'},
+     'quest-test-series':{icon:'📝',name:'Quest Test Series'}
     };
     const keys=Object.keys(EVENTS), orbit=document.getElementById('orbit'), cards=[];
     orbit.innerHTML='';
     keys.forEach(k=>{const a=document.createElement('a');a.className='ev';a.href='#'+k;a.innerHTML='<span>'+EVENTS[k].icon+'</span>'+EVENTS[k].name;orbit.appendChild(a);cards.push(a)});
-
-    const page=document.getElementById('page');
-    function route(){
-     const k=location.hash.slice(1),e=EVENTS[k];
-     if(!e){page.classList.remove('on');return}
-     page.innerHTML='<div class="wrap"><a class="back" href="#home">← Back to the orbit</a><div class="tag" style="margin-top:28px">'+e.tag+'</div><h2>'+e.icon+' '+e.name+'</h2><p>'+e.desc+'</p><div class="meta"><div><b>When</b>'+e.when+'</div><div><b>Where</b>'+e.where+'</div><div><b>Who</b>'+e.who+'</div></div><h3>What’s included</h3><ul>'+e.list.map(x=>'<li>'+x+'</li>').join('')+'</ul><a class="btn" href="#'+k+'" onclick="this.textContent=\'You’re on the list ✓\';return false">Register interest</a></div>';
-     page.classList.add('on');page.scrollTop=0;
-    }
-    addEventListener('hashchange',route);route();
 
     /* ---------- WebGL black hole ---------- */
     const cv=document.getElementById('gl'),gl=cv.getContext('webgl2');
@@ -217,7 +218,6 @@ void main(){
     // cleanup (needed in React so remounts don't stack listeners/loops)
     return () => {
       cancelAnimationFrame(raf);
-      removeEventListener('hashchange', route);
       removeEventListener('resize', size);
     };
   }, []);
@@ -230,7 +230,14 @@ void main(){
       <header><h1>EVENTS</h1></header>
       <div id="orbit"></div>
       <div className="hint">Click an event to open it</div>
-      <section id="page"></section>
+      {Page && (
+        <section id="page" className="on">
+          <a href="#home" style={{position:"fixed",top:16,left:20,zIndex:30,color:"#a96bff",textDecoration:"none",fontWeight:600}}>
+            ← Back to the orbit
+          </a>
+          <Page />
+        </section>
+      )}
     </>
   );
 }
