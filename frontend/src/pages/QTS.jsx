@@ -1,305 +1,296 @@
-import React from "react";
+import { useState, useEffect, useRef } from "react";
 
-/*
-  Quest Test Series – event page
-  Uses the official QUEST design tokens (see the :root block in `css` below).
+/* Put your photos in public/images/quest_test_series/ and edit the names below */
+const PHOTOS = [
+  { src: "/images/quest_test_series/photo1.jpg", name: "Quest Test Series photo 1", art: "a1" },
+  { src: "/images/quest_test_series/photo2.jpg", name: "Quest Test Series photo 2", art: "a2" },
+  { src: "/images/quest_test_series/photo3.jpg", name: "Quest Test Series photo 3", art: "a3" },
+  { src: "/images/quest_test_series/photo4.jpg", name: "Quest Test Series photo 4", art: "a1" },
+  { src: "/images/quest_test_series/photo5.jpg", name: "Quest Test Series photo 5", art: "a2" },
+  { src: "/images/quest_test_series/photo6.jpg", name: "Quest Test Series photo 6", art: "a3" },
+];
 
-  Images: put them in your public folder, e.g.
-    /public/images/poster.jpg
-    /public/images/photo1.jpg ... photo6.jpg
-*/
+/* Edit the text of each day here */
+const DAYS = [
+  {
+    day: "Day 1",
+    title: "Aptitude Test",
+    text: "Sharpen your problem-solving and logical thinking skills through challenging aptitude questions. Test your speed, accuracy, and analytical abilities while preparing for placement opportunities.",
+  },
+  {
+    day: "Day 2",
+    title: "Group Discussion",
+    text: "Enhance your communication, teamwork, and critical thinking skills. Express your ideas, participate in meaningful discussions, and learn to present your opinions with confidence.",
+  },
+  {
+    day: "Day 3",
+    title: "Personal Interview",
+    text: "Build confidence and develop essential interview skills. Practice answering questions, presenting yourself professionally, and making a lasting impression on recruiters.",
+  },
+];
 
-const EVENT = {
-  title: "Quest Test Series",
-  organiser: "Your Organisation Name",
-  date: "Nov 21 - Nov 23, 2026",
-  time: "9:00 AM onwards",
-  location: "Your College Name, City",
-  registerLink: "#",
-  poster: "/images/poster.jpg",
-  description:
-    "Quest Test Series is a three-day event designed to prepare you for placements. On the first day we hold the aptitude test and interview round, the second day is the group discussion, and on the third day the final interviews are conducted.",
-  days: [
-    { label: "Day 1", text: "Aptitude test and interview round." },
-    { label: "Day 2", text: "Group discussion." },
-    { label: "Day 3", text: "Final interviews." },
-  ],
-  gallery: [
-    "/images/photo1.jpg",
-    "/images/photo2.jpg",
-    "/images/photo3.jpg",
-    "/images/photo4.jpg",
-    "/images/photo5.jpg",
-    "/images/photo6.jpg",
-  ],
-};
-
-const CalendarIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <rect x="3" y="5" width="18" height="16" rx="2" />
-    <path d="M3 10h18M8 3v4M16 3v4" />
-  </svg>
-);
-
-const ClockIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 7v5l3 2" />
-  </svg>
-);
-
-const PinIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" />
-    <circle cx="12" cy="10" r="2.5" />
-  </svg>
-);
-
-export default function QuestTestSeries() {
-  return (
-    <div className="qts">
-      <style>{css}</style>
-
-      {/* HERO */}
-      <header className="qts-hero">
-        <div className="qts-hero-inner">
-          <div>
-            <div className="qts-badges">
-              <span className="qts-badge">Featured Event</span>
-              <span className="qts-badge">Upcoming</span>
-              <span className="qts-badge">In-Person</span>
-            </div>
-
-            <h1>{EVENT.title}</h1>
-            <p className="qts-by">By {EVENT.organiser}</p>
-
-            <div className="qts-meta">
-              <div><CalendarIcon /><span>{EVENT.date}</span></div>
-              <div><ClockIcon /><span>{EVENT.time}</span></div>
-              <div><PinIcon /><span>{EVENT.location}</span></div>
-            </div>
-          </div>
-
-          <div className="qts-poster">
-            <img src={EVENT.poster} alt={`${EVENT.title} poster`} />
-          </div>
-        </div>
-      </header>
-
-      {/* DESCRIPTION */}
-      <section className="qts-section qts-about">
-        <h2>About the event</h2>
-        <p>{EVENT.description}</p>
-
-        <div className="qts-days">
-          {EVENT.days.map((d) => (
-            <div className="qts-day" key={d.label}>
-              <h3>{d.label}</h3>
-              <p>{d.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* REGISTER */}
-      <div className="qts-register">
-        <a className="qts-btn" href={EVENT.registerLink} target="_blank" rel="noopener noreferrer">
-          Register Now
-        </a>
-      </div>
-
-      {/* GALLERY */}
-      <section className="qts-section qts-gallery">
-        <h2>Gallery</h2>
-        <div className="qts-grid">
-          {EVENT.gallery.map((src, i) => (
-            <img key={src} src={src} alt={`${EVENT.title} photo ${i + 1}`} loading="lazy" />
-          ))}
-        </div>
-      </section>
-
-      <footer className="qts-footer">&copy; 2026 QUEST</footer>
-    </div>
-  );
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500&display=swap');
+:root{
+  --font-primary:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --font-mono:'Space Grotesk',monospace;
+  --color-primary:#8244B3;--color-secondary:#A879E6;
+  --accent-teal:#2EEED0;--accent-blue:#7C9BFF;
+  --bg-color:#0B0B14;--surface-color:#1A0F2E;--surface-hover:#23143E;
+  --glass-bg:rgba(26,15,46,.65);--glass-card-bg:rgba(255,255,255,.035);
+  --glass-border:rgba(255,255,255,.09);--glass-border-hover:rgba(168,121,230,.4);
+  --text-main:#FFFFFF;--text-muted:#CBD5E1;--text-dim:#94A3B8;
+  --purple-gradient:linear-gradient(135deg,#8244B3 0%,#A879E6 100%);
+  --teal-gradient:linear-gradient(135deg,#2EEED0 0%,#7C9BFF 100%);
+  --pad:clamp(16px,4vw,24px);
+  color-scheme:dark;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
+*,*::before,*::after{box-sizing:inherit}
+html{background:var(--bg-color);scroll-behavior:smooth}
+body{margin:0;display:block;width:100%;min-width:0;min-height:100dvh;background-color:var(--bg-color);background-repeat:no-repeat;color:var(--text-main);font-family:var(--font-primary);overflow-x:hidden;
+  background-image:radial-gradient(60% 50% at 50% 30%,rgba(130,68,179,.28),transparent 70%),radial-gradient(40% 40% at 90% 10%,rgba(124,155,255,.08),transparent 70%)}
+#root{width:100%;max-width:none;margin:0;padding:0;border:0;text-align:initial;display:block}
+a{color:var(--color-secondary);text-decoration:none;transition:color .2s}
+a:hover{color:#fff}
+:focus-visible{outline:2px solid var(--color-secondary);outline-offset:3px;border-radius:8px}
+::selection{background:rgba(168,121,230,.4);color:#fff}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad);position:relative;z-index:1}
+.page{min-height:100dvh;display:flex;flex-direction:column}
+.page>.wrap{flex:1 0 auto;width:100%}
 
-const css = `
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap');
+/* Title */
+.title{text-align:center;padding:36px 0 4px;animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.title h1{font-size:clamp(34px,6vw,60px);line-height:1.05;font-weight:700;margin:0 0 8px;letter-spacing:-.01em;
+  background:linear-gradient(135deg,#FFFFFF 0%,#A879E6 60%,#7C9BFF 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 26px rgba(130,68,179,.5))}
+.title::after{content:"";display:block;width:72px;height:3px;margin:14px auto 0;border-radius:3px;background:var(--teal-gradient)}
 
-:root {
-  --font-primary: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
-
-  /* Brand colours */
-  --color-primary: #8244B3;
-  --color-secondary: #A879E6;
-
-  /* Accent colours */
-  --accent-teal: #2EEED0;
-  --accent-blue: #7C9BFF;
-
-  /* Backgrounds */
-  --bg-color: #0B0B14;
-  --surface-color: #1A0F2E;
-  --surface-hover: #23143E;
-
-  /* Glassmorphism */
-  --glass-bg: rgba(26, 15, 46, 0.65);
-  --glass-card-bg: rgba(255, 255, 255, 0.035);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-border-hover: rgba(168, 121, 230, 0.4);
-
-  /* Typography */
-  --text-main: #FFFFFF;
-  --text-muted: #CBD5E1;
-  --text-dim: #94A3B8;
-
-  /* Gradients */
-  --purple-gradient: linear-gradient(135deg, #8244B3 0%, #A879E6 100%);
-  --teal-gradient: linear-gradient(135deg, #2EEED0 0%, #7C9BFF 100%);
-}
-
-.qts, .qts * { box-sizing: border-box; }
-.qts {
-  margin: 0;
-  min-height: 100vh;
-  font-family: var(--font-primary);
-  background: var(--bg-color);
-  color: var(--text-main);
-  line-height: 1.6;
-}
-
-/* Hero */
-.qts-hero {
-  padding: 100px 8vw 70px;
-  background: radial-gradient(ellipse at 15% 90%, rgba(130, 68, 179, 0.22), transparent 55%), var(--bg-color);
-}
-.qts-hero-inner {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 50px;
-  align-items: center;
-}
-.qts-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
-.qts-badge {
-  border: 1px solid var(--glass-border-hover);
-  background: var(--glass-card-bg);
-  color: var(--color-secondary);
-  padding: 4px 14px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-.qts-badge {
-  cursor: pointer;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
-}
-.qts-badge:hover {
-  border-color: var(--color-secondary);
-  background: rgba(168, 121, 230, 0.14);
-  color: var(--text-main);
-  box-shadow: 0 0 14px rgba(168, 121, 230, 0.55);
-}
-
-
-.qts h1 {
-  margin: 0 0 18px;
-  font-size: clamp(2.6rem, 8vw, 5.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  font-weight: 800;
-}
-.qts-by { margin: 0 0 26px; color: var(--text-dim); }
-
-.qts-meta { display: flex; flex-direction: column; gap: 10px; font-size: 1.1rem; color: var(--text-muted); }
-.qts-meta div { display: flex; align-items: center; gap: 12px; }
-.qts-meta svg {
-  width: 22px; height: 22px; flex-shrink: 0;
-  stroke: var(--color-secondary); fill: none; stroke-width: 2;
-}
-
-.qts-poster img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 18px;
-  background: var(--surface-color);
-  border: 1px solid var(--glass-border-hover);
-}
-
-/* Sections */
-.qts-section { padding: 60px 8vw; }
-.qts h2 { margin: 0 0 18px; font-size: 1.8rem; font-weight: 700; }
-.qts-about { border-top: 1px solid var(--glass-border); }
-.qts-about > p { max-width: 70ch; margin: 0; color: var(--text-muted); font-size: 1.1rem; }
-
-.qts-days {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-  margin-top: 30px;
-}
-.qts-day {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 14px;
-  padding: 22px;
-  backdrop-filter: blur(10px);
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-.qts-day:hover { border-color: var(--glass-border-hover); background: var(--surface-hover); }
-.qts-day h3 { margin: 0 0 6px; color: var(--color-secondary); font-size: 1.15rem; }
-.qts-day p { margin: 0; color: var(--text-dim); }
+/* Facts */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:460px;margin:20px auto 0;animation:rise .8s .12s cubic-bezier(.2,.7,.2,1) both}
+.fact{display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:center;justify-content:center;text-align:left;padding:6px 10px;border-radius:12px;background:var(--glass-card-bg);border:1px solid var(--glass-border);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s,box-shadow .25s}
+.fact:hover{transform:translateY(-3px);border-color:var(--glass-border-hover);box-shadow:0 10px 24px rgba(130,68,179,.28)}
+.fact svg{width:13px;height:13px;stroke:var(--color-secondary);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;grid-row:1/3;display:block;box-sizing:content-box;padding:3px;border-radius:50%;background:rgba(168,121,230,.16)}
+.fact small{display:block;color:var(--text-dim);font-size:9px;line-height:1.2}
+.fact b{display:block;font-size:11.5px;line-height:1.25;font-weight:600;white-space:nowrap}
 
 /* Register */
-.qts-register { text-align: center; padding: 20px 8vw 60px; }
-.qts-btn {
-  display: inline-block;
-  background: var(--purple-gradient);
-  color: var(--text-main);
-  font-weight: 700;
-  font-size: 1.15rem;
-  text-decoration: none;
-  padding: 16px 44px;
-  border-radius: 12px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.qts-btn:hover { transform: translateY(-2px); opacity: 0.92; }
-.qts-btn:focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
+.cta{text-align:center;margin-top:20px;animation:rise .8s .24s cubic-bezier(.2,.7,.2,1) both}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;padding:15px 40px;border:0;border-radius:999px;background:var(--purple-gradient);color:#fff;font:600 17px var(--font-primary);cursor:pointer;box-shadow:0 8px 28px rgba(130,68,179,.45);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(130,68,179,.45);color:#fff}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite;pointer-events:none}
 
-/* Gallery */
-.qts-gallery { border-top: 1px solid var(--glass-border); }
-.qts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-.qts-grid img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 12px;
-  background: var(--surface-color);
-  border: 1px solid var(--glass-border);
-  transition: border-color 0.2s ease;
-}
-.qts-grid img:hover { border-color: var(--glass-border-hover); }
+/* About */
+.about{position:relative;isolation:isolate;overflow:hidden;margin:32px auto 0;max-width:680px;padding:20px 22px;border-radius:18px;background:var(--glass-card-bg);border:1px solid var(--glass-border);display:grid;gap:10px;backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.35);animation:rise .8s .36s cubic-bezier(.2,.7,.2,1) both}
+.about::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple-gradient)}
+.about h2{margin:0;font-size:18px}
+.about p{margin:0;color:var(--text-muted);line-height:1.65;font-size:14px}
+.about ul{margin:6px 0 0;padding:0;list-style:none;display:flex;gap:10px;flex-wrap:wrap}
+.about li{padding:5px 12px;border-radius:999px;border:1px solid var(--glass-border);font-size:12px;color:var(--text-muted)}
 
-/* Footer */
-.qts-footer {
-  text-align: center;
-  padding: 30px;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  border-top: 1px solid var(--glass-border);
-}
+/* Day sections */
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:720px;margin:24px auto 0;animation:rise .8s .45s cubic-bezier(.2,.7,.2,1) both}
+.day{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:200px;padding:16px 14px;border-radius:14px;background:var(--glass-card-bg);border:1px solid var(--glass-border);backdrop-filter:blur(12px);transition:transform .25s,border-color .25s,box-shadow .25s}
+.day::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--purple-gradient)}
+.day:hover{transform:translateY(-4px);border-color:var(--glass-border-hover);box-shadow:0 14px 30px rgba(130,68,179,.28)}
+.day-tag{display:inline-block;align-self:flex-start;padding:2px 10px;border-radius:999px;border:1px solid var(--glass-border-hover);background:rgba(168,121,230,.12);color:var(--color-secondary);font:500 11px var(--font-mono)}
+.day h3{margin:10px 0 5px;font-size:16px;font-weight:700}
+.day p{margin:0;color:var(--text-muted);font-size:12px;line-height:1.55}
+@media(max-width:700px){.days{grid-template-columns:1fr}.day{min-height:0}}
 
-@media (max-width: 900px) {
-  .qts-hero-inner { grid-template-columns: 1fr; }
+/* Coverflow gallery */
+.gallery{margin-top:34px;overflow-x:clip;container-type:inline-size;animation:fade 1s .5s ease both}
+.gallery h2{text-align:center;font-size:18px;margin:0 0 4px}
+.gallery h2::after{content:"";display:block;width:40px;height:3px;margin:8px auto 0;border-radius:3px;background:var(--purple-gradient)}
+.gstage{position:relative;max-width:1000px;height:calc(min(380px,34cqw)*.625 + 84px);margin:0 auto;perspective:1400px;touch-action:pan-y}
+.gcard{position:absolute;top:50%;left:50%;width:min(300px,26cqw);aspect-ratio:8/5;margin:0;border-radius:20px;overflow:hidden;border:1px solid var(--glass-border);cursor:pointer;opacity:0;pointer-events:none;
+  transform:translate(-50%,-50%) scale(.5);transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .6s,border-color .3s;transform-style:preserve-3d}
+.gcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,20,.15) 0%,rgba(11,11,20,.1) 45%,rgba(11,11,20,.88) 100%)}
+.gcard .ginfo{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;display:none}
+.gbar{display:flex;align-items:center;gap:12px;font:12px var(--font-mono);color:var(--text-muted);padding-right:38px;position:relative;min-height:30px}
+.gbar i{flex:1;height:2px;background:var(--glass-border);border-radius:2px;overflow:hidden}
+.gbar i b{display:block;height:100%;background:var(--purple-gradient);transition:width .6s}
+.gcard[data-pos="0"]{opacity:1;pointer-events:auto;z-index:5;width:min(380px,34cqw);transform:translate(-50%,-50%) translateZ(60px);border-color:var(--glass-border-hover);box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 44px rgba(168,121,230,.35),0 0 0 1px rgba(168,121,230,.3)}
+.gcard[data-pos="0"] .ginfo{display:block}
+.gcard[data-pos="-1"]{opacity:.9;pointer-events:auto;z-index:4;transform:translate(calc(-50% - min(240px,21cqw)),-50%) rotateY(32deg) scale(.85)}
+.gcard[data-pos="1"]{opacity:.9;pointer-events:auto;z-index:4;transform:translate(calc(-50% + min(240px,21cqw)),-50%) rotateY(-32deg) scale(.85)}
+.gcard[data-pos="-2"]{opacity:.65;pointer-events:auto;z-index:3;transform:translate(calc(-50% - min(380px,33cqw)),-50%) rotateY(38deg) scale(.72)}
+.gcard[data-pos="2"]{opacity:.65;pointer-events:auto;z-index:3;transform:translate(calc(-50% + min(380px,33cqw)),-50%) rotateY(-38deg) scale(.72)}
+.gcard[data-pos="-1"]:hover,.gcard[data-pos="1"]:hover,.gcard[data-pos="-2"]:hover,.gcard[data-pos="2"]:hover{border-color:var(--glass-border-hover);opacity:1}
+.gnext{position:absolute;right:0;bottom:0;width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass-bg);backdrop-filter:blur(10px);color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center;padding:0}
+.gnext:hover{border-color:var(--glass-border-hover)}
+.a1{background:radial-gradient(70% 50% at 70% 20%,rgba(46,238,208,.55),transparent 70%),linear-gradient(160deg,#23143E,#8244B3 60%,#1A0F2E)}
+.a2{background:radial-gradient(60% 50% at 30% 25%,rgba(124,155,255,.6),transparent 70%),linear-gradient(160deg,#1A0F2E,#5b3a9a 55%,#0B0B14)}
+.a3{background:radial-gradient(60% 50% at 50% 30%,rgba(168,121,230,.5),transparent 70%),linear-gradient(160deg,#23143E,#1A0F2E 70%)}
+
+footer{position:relative;margin-top:36px;border-top:1px solid var(--glass-border);background:var(--surface-color);text-align:center;padding:16px;font-size:13px;color:var(--text-dim)}
+
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes fade{from{opacity:0}}
+@keyframes shine{0%,55%{left:-60%}100%{left:140%}}
+
+@media(max-width:700px){
+  .facts{gap:6px}
+  .fact{padding:6px;column-gap:6px}
+  .fact b{font-size:10.5px}
+  .gallery{margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad));margin-top:28px}
 }
-@media (prefers-reduced-motion: reduce) {
-  .qts-btn, .qts-day, .qts-grid img, .qts-badge { transition: none; }
+@container (max-width:700px){
+  .gstage{height:calc(56cqw*.625 + 56px)}
+  .gcard{width:40cqw}
+  .gcard[data-pos="0"]{width:56cqw}
+  .gcard[data-pos="-1"]{transform:translate(calc(-50% - 24cqw),-50%) rotateY(30deg) scale(.85)}
+  .gcard[data-pos="1"]{transform:translate(calc(-50% + 24cqw),-50%) rotateY(-30deg) scale(.85)}
+  .gcard[data-pos="-2"]{transform:translate(calc(-50% - 34cqw),-50%) rotateY(36deg) scale(.7)}
+  .gcard[data-pos="2"]{transform:translate(calc(-50% + 34cqw),-50%) rotateY(-36deg) scale(.7)}
+  .gcard .ginfo{left:10px;right:10px;bottom:10px}
+  .gnext{width:26px;height:26px;font-size:16px}
+  .gbar{gap:8px;font-size:10px;padding-right:32px;min-height:26px}
 }
+@media(max-width:359px){
+  .facts{grid-template-columns:1fr}
+  .fact{justify-content:start;padding:6px 12px;column-gap:10px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 `;
+
+export default function QuestTestSeries() {
+  const N = PHOTOS.length;
+  const [cur, setCur] = useState(0);
+  const touchX = useRef(0);
+
+  useEffect(() => {
+    document.title = "Quest Test Series | QUEST Events";
+  }, []);
+
+  // Auto-scroll every 2.8s; timer restarts after any manual change
+  useEffect(() => {
+    const t = setInterval(() => setCur((c) => (c + 1) % N), 2800);
+    return () => clearInterval(t);
+  }, [cur, N]);
+
+  const go = (i) => setCur(((i % N) + N) % N);
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <div className="page">
+        <div className="wrap">
+          <main>
+            <section className="title">
+              <h1>Quest Test Series</h1>
+            </section>
+
+            {/* Edit date, time and place here */}
+            <section className="facts" aria-label="Event details">
+              <div className="fact">
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="5" width="16" height="15" rx="2" />
+                  <path d="M4 10h16M9 3v4M15 3v4" />
+                </svg>
+                <small>Date</small>
+                <b>21 - 23 NOV</b>
+              </div>
+              <div className="fact">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+                  <path d="M12 8v4l3 2" />
+                </svg>
+                <small>Time</small>
+                <b>9:00 AM</b>
+              </div>
+              <div className="fact">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                <small>Place</small>
+                <b>Your Venue</b>
+              </div>
+            </section>
+
+            <div className="cta">
+              <a className="btn" href="#" target="_blank" rel="noopener noreferrer">
+                Register
+              </a>
+            </div>
+
+            <section className="about">
+              <h2>About the event</h2>
+              <p>
+                Quest Test Series is a three-day event designed to prepare you for placements.
+                On the first day we hold the aptitude test and interview round, the second day
+                is the group discussion, and on the third day the final interviews are conducted.
+              </p>
+            </section>
+
+            {/* Three separate day sections */}
+            <section className="days" aria-label="Event schedule">
+              {DAYS.map((d) => (
+                <article className="day" key={d.day}>
+                  <span className="day-tag">{d.day}</span>
+                  <h3>{d.title}</h3>
+                  <p>{d.text}</p>
+                </article>
+              ))}
+            </section>
+
+            <section className="gallery" aria-label="Event photos">
+              <h2>Event photos</h2>
+              <div
+                className="gstage"
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Event photos"
+                onTouchStart={(e) => {
+                  touchX.current = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const dx = e.changedTouches[0].clientX - touchX.current;
+                  if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+                }}
+              >
+                {PHOTOS.map((p, i) => {
+                  let d = (((i - cur) % N) + N) % N;
+                  if (d > N / 2) d -= N;
+                  return (
+                    <figure
+                      key={i}
+                      className={`gcard ${p.art}`}
+                      data-pos={d}
+                      aria-hidden={d !== 0}
+                      onClick={() => go(i)}
+                    >
+                      {p.src ? <img src={p.src} alt={p.name} /> : null}
+                      <div className="ginfo">
+                        <div className="gbar">
+                          <span>
+                            {String(cur + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
+                          </span>
+                          <i>
+                            <b style={{ width: ((cur + 1) / N) * 100 + "%" }} />
+                          </i>
+                          <button
+                            className="gnext"
+                            aria-label="Next photo"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              go(cur + 1);
+                            }}
+                          >
+                            ›
+                          </button>
+                        </div>
+                      </div>
+                    </figure>
+                  );
+                })}
+              </div>
+            </section>
+          </main>
+        </div>
+        <footer>&copy; 2026 QUEST</footer>
+      </div>
+    </>
+  );
+}
