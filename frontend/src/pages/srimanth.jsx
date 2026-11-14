@@ -13,13 +13,12 @@ const EVENT = {
 
 /* Photos go in /public/images/. If src is null or the file is missing, a gradient is shown. */
 const PHOTOS = [
-  { src: "/images/freshers-poster.jpg", alt: "Quest Freshers poster", art: "a1" },
-  { src: "/images/freshers1.jpg", alt: "Welcome session", art: "a2" },
-  { src: "/images/freshers2.jpg", alt: "Icebreaker games", art: "a3" },
-  { src: "/images/freshers3.jpg", alt: "Performances", art: "a1" },
-  { src: "/images/freshers4.jpg", alt: "Club showcase", art: "a2" },
-  { src: "/images/freshers5.jpg", alt: "Freshers together", art: "a3" },
-  { src: "/images/freshers6.jpg", alt: "Group photo", art: "a1" },
+  { src: "public/images/freshers/1ea02787-2b62-40d3-b5e6-e132048cc209.jpg", alt: "Quest Freshers poster", art: "a1" },
+  { src: "public/images/freshers/c9575510-f6b4-4258-800f-5059fca87eaf.jpg", alt: "Welcome session", art: "a2" },
+  { src: "public/images/freshers/e3492114-2692-41c8-984a-a2e1fad7d064.jpg", alt: "Icebreaker games", art: "a3" },
+  { src: "public/images/freshers/6e05aa11-08ed-40ec-b9eb-42f52c8e6399.jpg", alt: "Performances", art: "a1" },
+  { src: "public/images/freshers/7dd45f87-93ca-44df-b722-b4da89f037b4.jpg", alt: "Club showcase", art: "a2" },
+  { src: "public/images/freshers/bcf75357-24b8-4f80-9f7e-5f6156373b8c.jpg", alt: "Freshers together", art: "a3" },
 ];
 
 const CSS = `
