@@ -13,8 +13,7 @@ function App() {
       
       <EventHorizon />
       <hr />
-      <FreshersEvent />
-      <hr />
+      
 
     </div>
   );
