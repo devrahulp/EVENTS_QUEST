@@ -208,7 +208,7 @@ export default function QuestEvents() {
                 <path d="M4 10h16M9 3v4M15 3v4" />
               </svg>
               <small>Date</small>
-              <b id="f-date">17th NOV</b>
+              <b id="f-date">16th NOV</b>
             </div>
             <div className="fact">
               <svg viewBox="0 0 24 24">
@@ -234,7 +234,7 @@ export default function QuestEvents() {
           <section className="about" id="about">
             <h2>About the event</h2>
             <p>
-              Placement IQ is a career guidance initiative by Team QUEST aimed at preparing students for the professional world. The session focuses on building industry awareness, developing essential career skills, understanding recruitment processes, and equipping students with the knowledge and confidence needed to navigate future career opportunities.
+              Placement IQ is an insightful career development session aimed at helping students understand the corporate world and prepare for future placement opportunities. The session covers career planning, strategies for securing high-CTC jobs, resume building, LinkedIn optimization, and technical and HR interview preparation. The event features Sahana Shanbhag, Senior Analyst at Target Corporation, who will share industry insights and guidance on developing the skills needed to succeed in the corporate world.
             </p>
           </section>
 
@@ -268,14 +268,8 @@ export default function QuestEvents() {
                     onClick={() => go(i)}
                   >
                     {p.src ? <img src={p.src} alt={p.name} /> : null}
-                                        <div className="ginfo">
+                    <div className="ginfo">
                       <div className="gbar">
-                        <span className="gn">
-                          {String(cur + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
-                        </span>
-                        <i>
-                          <b style={{ width: ((cur + 1) / N) * 100 + "%" }} />
-                        </i>
                         <button
                           className="gnext"
                           aria-label="Next photo"
