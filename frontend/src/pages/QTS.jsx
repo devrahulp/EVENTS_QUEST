@@ -14,7 +14,7 @@ const PHOTOS = [
 const DAYS = [
   {
     day: "Day 1",
-    venue: "CSE Labs",
+    venue: "Labs",
     title: "Aptitude Test",
     text: "Sharpen your problem-solving and logical thinking skills through challenging aptitude questions. Test your speed, accuracy, and analytical abilities while preparing for placement opportunities.",
   },
@@ -83,10 +83,10 @@ a:hover{color:#fff}
 .btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite;pointer-events:none}
 
 /* About */
-.about{position:relative;isolation:isolate;overflow:hidden;margin:32px auto 0;max-width:680px;padding:20px 22px;border-radius:18px;background:var(--glass-card-bg);border:1px solid var(--glass-border);display:grid;gap:10px;backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.35);animation:rise .8s .36s cubic-bezier(.2,.7,.2,1) both}
+.about{position:relative;isolation:isolate;overflow:hidden;margin:32px auto 0;max-width:680px;padding:22px 24px;border-radius:18px;background:var(--surface-color);border:1px solid var(--glass-border-hover);display:grid;gap:10px;backdrop-filter:blur(12px);box-shadow:0 20px 50px rgba(0,0,0,.35);animation:rise .8s .36s cubic-bezier(.2,.7,.2,1) both}
 .about::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple-gradient)}
-.about h2{margin:0;font-size:18px}
-.about p{margin:0;color:var(--text-muted);line-height:1.65;font-size:14px}
+.about h2{margin:0;font-size:22px;color:var(--text-main)}
+.about p{margin:0;color:var(--text-main);line-height:1.7;font-size:16px}
 .about ul{margin:6px 0 0;padding:0;list-style:none;display:flex;gap:10px;flex-wrap:wrap}
 .about li{padding:5px 12px;border-radius:999px;border:1px solid var(--glass-border);font-size:12px;color:var(--text-muted)}
 
@@ -266,20 +266,6 @@ export default function QuestTestSeries() {
                       onClick={() => go(i)}
                     >
                       {p.src ? <img src={p.src} alt={p.name} /> : null}
-                      <div className="ginfo">
-                        <div className="gbar">
-                          <button
-                            className="gnext"
-                            aria-label="Next photo"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              go(cur + 1);
-                            }}
-                          >
-                            ›
-                          </button>
-                        </div>
-                      </div>
                     </figure>
                   );
                 })}
