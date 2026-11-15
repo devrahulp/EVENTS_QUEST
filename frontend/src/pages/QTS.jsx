@@ -14,7 +14,7 @@ const PHOTOS = [
 const DAYS = [
   {
     day: "Day 1",
-    venue: "Labs",
+    venue: "CSE Labs",
     title: "Aptitude Test",
     text: "Sharpen your problem-solving and logical thinking skills through challenging aptitude questions. Test your speed, accuracy, and analytical abilities while preparing for placement opportunities.",
   },
@@ -128,6 +128,13 @@ a:hover{color:#fff}
 .a2{background:radial-gradient(60% 50% at 30% 25%,rgba(124,155,255,.6),transparent 70%),linear-gradient(160deg,#1A0F2E,#5b3a9a 55%,#0B0B14)}
 .a3{background:radial-gradient(60% 50% at 50% 30%,rgba(168,121,230,.5),transparent 70%),linear-gradient(160deg,#23143E,#1A0F2E 70%)}
 
+/* Centre photo viewer */
+.lb{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:rgba(11,11,20,.88);backdrop-filter:blur(8px);cursor:zoom-out;animation:fade .25s ease both}
+.lb img{max-width:min(92vw,1000px);max-height:86dvh;object-fit:contain;border-radius:16px;border:1px solid var(--glass-border-hover);box-shadow:0 30px 80px rgba(0,0,0,.6);cursor:default;animation:pop .3s cubic-bezier(.2,.7,.2,1) both}
+.lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:16px;width:40px;height:40px;border-radius:50%;border:1px solid var(--glass-border);background:var(--glass-bg);color:#fff;font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.lb-x:hover{border-color:var(--glass-border-hover)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}}
+
 footer{position:relative;margin-top:36px;border-top:1px solid var(--glass-border);background:var(--surface-color);text-align:center;padding:16px;font-size:13px;color:var(--text-dim)}
 
 @keyframes rise{from{opacity:0;transform:translateY(18px)}}
@@ -163,6 +170,7 @@ export default function QuestTestSeries() {
   const N = PHOTOS.length;
   const [cur, setCur] = useState(0);
   const touchX = useRef(0);
+  const [open, setOpen] = useState(null); // index of the photo shown in the centre viewer
 
   useEffect(() => {
     document.title = "Quest Test Series | QUEST Events";
@@ -170,9 +178,18 @@ export default function QuestTestSeries() {
 
   // Auto-scroll every 2.8s; timer restarts after any manual change
   useEffect(() => {
+    if (open !== null) return;
     const t = setInterval(() => setCur((c) => (c + 1) % N), 2800);
     return () => clearInterval(t);
-  }, [cur, N]);
+  }, [cur, N, open]);
+
+  // Close the photo viewer with the Escape key
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   const go = (i) => setCur(((i % N) + N) % N);
 
@@ -263,7 +280,10 @@ export default function QuestTestSeries() {
                       className={`gcard ${p.art}`}
                       data-pos={d}
                       aria-hidden={d !== 0}
-                      onClick={() => go(i)}
+                      onClick={() => {
+                        go(i);
+                        if (p.src) setOpen(i);
+                      }}
                     >
                       {p.src ? <img src={p.src} alt={p.name} /> : null}
                     </figure>
@@ -275,6 +295,25 @@ export default function QuestTestSeries() {
         </div>
         <footer>&copy; 2026 QUEST</footer>
       </div>
+
+      {open !== null && (
+        <div
+          className="lb"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo viewer"
+          onClick={() => setOpen(null)}
+        >
+          <button className="lb-x" aria-label="Close photo" onClick={() => setOpen(null)}>
+            ×
+          </button>
+          <img
+            src={PHOTOS[open].src}
+            alt={PHOTOS[open].name}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 }
