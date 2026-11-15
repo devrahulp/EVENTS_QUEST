@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
@@ -120,3 +121,23 @@ function App() {
 }
 
 export default App
+=======
+
+import EventHorizon from "./pages/spoorthi";
+
+
+
+function App() {
+  return (
+    <div>
+      
+      <EventHorizon />
+      <hr />
+      
+
+    </div>
+  );
+}
+
+export default App;
+>>>>>>> a31913e (final improvements)
