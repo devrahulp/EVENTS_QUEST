@@ -2,30 +2,30 @@ import { useState, useEffect, useRef } from "react";
 
 /* Put your photos in public/images/quest_test_series/ and edit the names below */
 const PHOTOS = [
-  { src: "/images/quest_test_series/photo1.jpeg", name: "Quest Test Series photo 1", art: "a1" },
-  { src: "/images/quest_test_series/photo2.jpeg", name: "Quest Test Series photo 2", art: "a2" },
-  { src: "/images/quest_test_series/photo3.jpeg", name: "Quest Test Series photo 3", art: "a3" },
-  { src: "/images/quest_test_series/photo4.jpeg", name: "Quest Test Series photo 4", art: "a1" },
-  { src: "/images/quest_test_series/photo5.jpeg", name: "Quest Test Series photo 5", art: "a2" },
-  { src: "/images/quest_test_series/photo6.jpeg", name: "Quest Test Series photo 6", art: "a3" },
+  { src: "/images/quest_test_series/photo1.jpg", name: "Quest Test Series photo 1", art: "a1" },
+  { src: "/images/quest_test_series/photo2.jpg", name: "Quest Test Series photo 2", art: "a2" },
+  { src: "/images/quest_test_series/photo3.jpg", name: "Quest Test Series photo 3", art: "a3" },
+  { src: "/images/quest_test_series/photo4.jpg", name: "Quest Test Series photo 4", art: "a1" },
+  { src: "/images/quest_test_series/photo5.jpg", name: "Quest Test Series photo 5", art: "a2" },
+  { src: "/images/quest_test_series/photo6.jpg", name: "Quest Test Series photo 6", art: "a3" },
 ];
 
 /* Edit the text of each day here */
 const DAYS = [
   {
-    day: "Day 1",
-    venue: "CSE Labs",
+    day: "Day 1 & Day 2",
+    venue: "Labs",
     title: "Aptitude Test",
     text: "Sharpen your problem-solving and logical thinking skills through challenging aptitude questions. Test your speed, accuracy, and analytical abilities while preparing for placement opportunities.",
   },
   {
-    day: "Day 2",
+    day: "Day 3",
     venue: "Seminar Hall",
     title: "Group Discussion",
     text: "Enhance your communication, teamwork, and critical thinking skills. Express your ideas, participate in meaningful discussions, and learn to present your opinions with confidence.",
   },
   {
-    day: "Day 3",
+    day: "Day 4",
     venue: "Interview Panels",
     title: "Personal Interview",
     text: "Build confidence and develop essential interview skills. Practice answering questions, presenting yourself professionally, and making a lasting impression on recruiters.",
@@ -232,9 +232,9 @@ export default function QuestTestSeries() {
             <section className="about">
               <h2>About the event</h2>
               <p>
-                Quest Test Series is a three-day event designed to prepare you for placements.
-                On the first day we hold the aptitude test and interview round, the second day
-                is the group discussion, and on the third day the final interviews are conducted.
+                Quest Test Series is a four-day event designed to prepare you for placements.
+                The aptitude test is held on the first two days, the group discussion is on the
+                third day, and the personal interviews are conducted on the fourth day.
               </p>
             </section>
 
@@ -293,7 +293,6 @@ export default function QuestTestSeries() {
             </section>
           </main>
         </div>
-        <footer>&copy; 2026 QUEST</footer>
       </div>
 
       {open !== null && (
