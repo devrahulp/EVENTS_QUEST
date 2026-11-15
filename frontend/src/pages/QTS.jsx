@@ -14,16 +14,19 @@ const PHOTOS = [
 const DAYS = [
   {
     day: "Day 1",
+    venue: "CSE Labs",
     title: "Aptitude Test",
     text: "Sharpen your problem-solving and logical thinking skills through challenging aptitude questions. Test your speed, accuracy, and analytical abilities while preparing for placement opportunities.",
   },
   {
     day: "Day 2",
+    venue: "Seminar Hall",
     title: "Group Discussion",
     text: "Enhance your communication, teamwork, and critical thinking skills. Express your ideas, participate in meaningful discussions, and learn to present your opinions with confidence.",
   },
   {
     day: "Day 3",
+    venue: "Interview Panels",
     title: "Personal Interview",
     text: "Build confidence and develop essential interview skills. Practice answering questions, presenting yourself professionally, and making a lasting impression on recruiters.",
   },
@@ -66,7 +69,7 @@ a:hover{color:#fff}
 .title::after{content:"";display:block;width:72px;height:3px;margin:14px auto 0;border-radius:3px;background:var(--teal-gradient)}
 
 /* Facts */
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:460px;margin:20px auto 0;animation:rise .8s .12s cubic-bezier(.2,.7,.2,1) both}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:320px;margin:20px auto 0;animation:rise .8s .12s cubic-bezier(.2,.7,.2,1) both}
 .fact{display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:center;justify-content:center;text-align:left;padding:6px 10px;border-radius:12px;background:var(--glass-card-bg);border:1px solid var(--glass-border);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s,box-shadow .25s}
 .fact:hover{transform:translateY(-3px);border-color:var(--glass-border-hover);box-shadow:0 10px 24px rgba(130,68,179,.28)}
 .fact svg{width:13px;height:13px;stroke:var(--color-secondary);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;grid-row:1/3;display:block;box-sizing:content-box;padding:3px;border-radius:50%;background:rgba(168,121,230,.16)}
@@ -93,7 +96,9 @@ a:hover{color:#fff}
 .day::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--purple-gradient)}
 .day:hover{transform:translateY(-4px);border-color:var(--glass-border-hover);box-shadow:0 14px 30px rgba(130,68,179,.28)}
 .day-tag{display:inline-block;align-self:flex-start;padding:2px 10px;border-radius:999px;border:1px solid var(--glass-border-hover);background:rgba(168,121,230,.12);color:var(--color-secondary);font:500 11px var(--font-mono)}
-.day h3{margin:10px 0 5px;font-size:16px;font-weight:700}
+.day-venue{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;font-weight:600;color:var(--text-muted)}
+.day-venue svg{width:13px;height:13px;flex-shrink:0;stroke:var(--color-secondary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.day h3{margin:6px 0 5px;font-size:16px;font-weight:700}
 .day p{margin:0;color:var(--text-muted);font-size:12px;line-height:1.55}
 @media(max-width:700px){.days{grid-template-columns:1fr}.day{min-height:0}}
 
@@ -189,7 +194,7 @@ export default function QuestTestSeries() {
                   <path d="M4 10h16M9 3v4M15 3v4" />
                 </svg>
                 <small>Date</small>
-                <b>21 - 23 NOV</b>
+                <b>Upcoming</b>
               </div>
               <div className="fact">
                 <svg viewBox="0 0 24 24">
@@ -197,15 +202,7 @@ export default function QuestTestSeries() {
                   <path d="M12 8v4l3 2" />
                 </svg>
                 <small>Time</small>
-                <b>9:00 AM</b>
-              </div>
-              <div className="fact">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z" />
-                  <circle cx="12" cy="10" r="2.5" />
-                </svg>
-                <small>Place</small>
-                <b>CSE Block</b>
+                <b>Upcoming</b>
               </div>
             </section>
 
@@ -229,6 +226,13 @@ export default function QuestTestSeries() {
               {DAYS.map((d) => (
                 <article className="day" key={d.day}>
                   <span className="day-tag">{d.day}</span>
+                  <span className="day-venue">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z" />
+                      <circle cx="12" cy="10" r="2.5" />
+                    </svg>
+                    {d.venue}
+                  </span>
                   <h3>{d.title}</h3>
                   <p>{d.text}</p>
                 </article>
@@ -264,12 +268,6 @@ export default function QuestTestSeries() {
                       {p.src ? <img src={p.src} alt={p.name} /> : null}
                       <div className="ginfo">
                         <div className="gbar">
-                          <span>
-                            {String(cur + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}
-                          </span>
-                          <i>
-                            <b style={{ width: ((cur + 1) / N) * 100 + "%" }} />
-                          </i>
                           <button
                             className="gnext"
                             aria-label="Next photo"
